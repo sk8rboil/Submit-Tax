@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row text-center">
+    <h1 class="my-2"><strong>Submit Tax Filing</strong></h1>
+  </div>
+  <div class="container">
+    <mat-stepper headerPosition="top" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+          <ng-template matStepLabel>Fill out your name</ng-template>
+          <div class="container">
+            <app-input-detail></app-input-detail>
+          </div>
+      </mat-step>
+
+      <mat-step [stepControl]="secondFormGroup" optional>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Review & Confirm</ng-template>
+          <div>
+          </div>
+        </form>
+      </mat-step>
+    </mat-stepper>
+
+  </div>
+  
+    <button class="btn btn-primary">back</button>
+    <button class="btn btn-primary">back</button>
+
+
+</div>
