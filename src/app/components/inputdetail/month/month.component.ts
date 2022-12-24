@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from '../filling-type/filling-type-model';
 
 interface Food {
   value: string;
@@ -17,7 +18,11 @@ export class MonthComponent {
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
 
+  months = ['January','Feb','Mar','April','May','June','July','August','Sep','Oct','November','December'];
+
+  years = ['2020','2021','2022'];
+
   topics = ['Angular','React','Vue'];
 
-
+ userModel = new User('0','');
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sale-amount',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./sale-amount.component.css']
 })
 export class SaleAmountComponent {
+
+
+/*   youblur(){
+    console.log("blur");
+  } */
 
 }

@@ -14,16 +14,58 @@
       <mat-step [stepControl]="secondFormGroup" optional>
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Review & Confirm</ng-template>
-          <div>
+          <div class="container">
+              <div class="card" style="padding: 30px;">
+                <h3><strong>Tax Filing Detail</strong></h3>
+                <hr class="hr hr-blurry" />
+                 <h5><strong>Type of filing</strong></h5>
+                   <h5>Data</h5>
+                 <h5><strong>Type of filing</strong></h5>
+                   <h5>Data</h5>
+                <h3><strong>Tax Computation</strong></h3>
+                <hr class="hr hr-blurry" />
+                <div class="row">
+                  <div class="col-md-8">
+                    <h5><strong>Total value of taxable electronic service exclusive of VAT</strong></h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h5>000000</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <h5><strong>Total VAT to be remitted</strong></h5>
+                    <h5>(7% of Total value of taxable electronic service exclusive of VAT)</h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h5>000000</h5>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <h5><strong>Total Amount Payable </strong></h5>
+                  </div>
+                  <div class="col-md-4">
+                    <h4><strong>000000</strong></h4>
+                  </div>
+                </div>
+                <h3><strong>Declaration</strong></h3>
+                <hr class="hr hr-blurry" />
+                <h5>I hereby certify that information given above are true and correct and agree to be bound by such information</h5>
+                
+              </div>
           </div>
+
+          <div class="container d-flex justify-content-center">
+            <button class="btn btn-success mt-5" style="border-radius: 20px;">Confirm and Submit</button>
+          </div>
+          
+
         </form>
       </mat-step>
     </mat-stepper>
 
   </div>
-  
-    <button class="btn btn-primary">back</button>
-    <button class="btn btn-primary">back</button>
 
 
 </div>

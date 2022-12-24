@@ -1,11 +1,55 @@
+<form #userForm="ngForm">
 
-<mat-radio-group aria-label="Select an option">
-  <mat-radio-button value="0" (change)="changeState($event.value)" >Ordinary filling</mat-radio-button>
-  <mat-radio-button value="1" (change)="changeState($event.value)" >Additional filling</mat-radio-button>
-</mat-radio-group>
+  <!--   {{userForm.value | json }}
+  {{userModel | json}} -->
+
+  <div class="form-group">
+    <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue">
+      <mat-radio-button value="0" #myvalue0>Ordinary filling</mat-radio-button>
+      <mat-radio-button value="1" #myvalue1>Additional filling</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="row">
+      <div class="col">
+        <h5>Tax month //Ordinary</h5>
+        <app-month></app-month>
+        <app-year></app-year>
+      </div>
+      <div class="col" *ngIf="userModel.radiovalue == '1' ">
+        <h5>Type</h5>
+          <mat-form-field appearance="fill" name="framework">
+            <mat-label>Cars</mat-label>
+            <mat-select>
+              <mat-option></mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+      </div>
+    </div>
+    <div>
+      <app-sale-amount></app-sale-amount>
+      <app-tax-amount></app-tax-amount>
+    </div>
+
+<!--     <div *ngIf="userModel.radiovalue == '0' ">
+      <app-sale-amount></app-sale-amount>
+      <app-tax-amount></app-tax-amount>
+    </div> -->
+
+    <div *ngIf="userModel.radiovalue == '1' ">
+      <h3><strong>2.Tax Computation</strong></h3>
+      <hr class="hr hr-blurry" />
+      <h5><strong>In case of late filing and payment, or addtional filing</strong> </h5>
 
 
+      <!-- Component -->
+      <div>
+        <app-surcharge></app-surcharge>
+        <app-penalty></app-penalty>
+        <app-total-amount></app-total-amount>
+      </div>
 
+    </div>
+  </div>
 
-
-
+</form>

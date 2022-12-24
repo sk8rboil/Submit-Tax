@@ -16,6 +16,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input'
 import { MatSelectModule } from '@angular/material/select';
 import { SaleAmountComponent } from './components/sale-amount/sale-amount.component';
+import { YearComponent } from './components/inputdetail/year/year.component';
+import { TaxAmountComponent } from './components/tax-amount/tax-amount.component';
+import { SurchargeComponent } from './components/inputdetail/surcharge/surcharge.component';
+import { PenaltyComponent } from './components/inputdetail/penalty/penalty.component';
+import { TotalAmountComponent } from './components/inputdetail/total-amount/total-amount.component';
+import { User } from './components/inputdetail/filling-type/filling-type-model';
 
 
 
@@ -29,6 +35,11 @@ import { SaleAmountComponent } from './components/sale-amount/sale-amount.compon
     FillingTypeComponent,
     MonthComponent,
     SaleAmountComponent,
+    YearComponent,
+    TaxAmountComponent,
+    SurchargeComponent,
+    PenaltyComponent,
+    TotalAmountComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,4 +59,6 @@ import { SaleAmountComponent } from './components/sale-amount/sale-amount.compon
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }
