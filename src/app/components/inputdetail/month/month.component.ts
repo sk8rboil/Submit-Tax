@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { User } from '../filling-type/filling-type-model';
 
-interface Food {
+/* interface Food {
   value: string;
   viewValue: string;
-}
+} */
 
 @Component({
   selector: 'app-month',
@@ -12,11 +11,11 @@ interface Food {
   styleUrls: ['./month.component.css']
 })
 export class MonthComponent {
-  foods: Food[] = [
+/*   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
     {value: 'pizza-1', viewValue: 'Pizza'},
     {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
+  ]; */
 
   months = ['January','Feb','Mar','April','May','June','July','August','Sep','Oct','November','December'];
 
@@ -24,5 +23,5 @@ export class MonthComponent {
 
   topics = ['Angular','React','Vue'];
 
- userModel = new User('0','');
+
 }

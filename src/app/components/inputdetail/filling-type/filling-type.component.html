@@ -1,7 +1,7 @@
 <form #userForm="ngForm">
 
-  <!--   {{userForm.value | json }}
-  {{userModel | json}} -->
+  <!--   {{userForm.value | json }} -->
+  {{userModel | json}}
 
   <div class="form-group">
     <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue">
@@ -12,26 +12,59 @@
     <div class="row">
       <div class="col">
         <h5>Tax month //Ordinary</h5>
-        <app-month></app-month>
-        <app-year></app-year>
+
+        <!-- Month -->
+        <mat-form-field appearance="fill" style="margin-right: 5px;">
+          <mat-label>Month</mat-label>
+          <mat-select name="month" [(ngModel)]="userModel.monthvalue">
+            <mat-option *ngFor="let item of months" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Year -->
+        <mat-form-field appearance="fill" name="framework">
+          <mat-label>Year</mat-label>
+          <mat-select name="year" [(ngModel)]="userModel.yearvalue">
+            <mat-option *ngFor="let item of years" [value]="item">{{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
       <div class="col" *ngIf="userModel.radiovalue == '1' ">
         <h5>Type</h5>
-          <mat-form-field appearance="fill" name="framework">
-            <mat-label>Cars</mat-label>
-            <mat-select>
-              <mat-option></mat-option>
-            </mat-select>
-          </mat-form-field>
-  
+        <mat-form-field appearance="fill" name="framework">
+          <mat-label>Cars</mat-label>
+          <mat-select>
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+
       </div>
     </div>
     <div>
-      <app-sale-amount></app-sale-amount>
-      <app-tax-amount></app-tax-amount>
+      <div class="row align-items-center">
+        <div class="col-md-8 col-sm-12">
+          <span>1.Total value of taxable electronic service exclusive of VAT</span>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <input type="number" (blur)="calculate()" class="form-control my-2" name="saleamount"
+            [(ngModel)]="userModel.saleamount" placeholder="THB" style="text-align: right;">
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-md-8 col-sm-12">
+          <span>2.Total VAT to be remitted (7% of 1.)</span>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <input [value]="userModel.saleamount" type="number" class="form-control my-2" name="taxamount"
+            [(ngModel)]="userModel.taxamount" placeholder="THB" style="text-align: right;">
+        </div>
+      </div>
     </div>
 
-<!--     <div *ngIf="userModel.radiovalue == '0' ">
+    <!--     <div *ngIf="userModel.radiovalue == '0' ">
       <app-sale-amount></app-sale-amount>
       <app-tax-amount></app-tax-amount>
     </div> -->

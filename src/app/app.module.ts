@@ -21,7 +21,7 @@ import { TaxAmountComponent } from './components/tax-amount/tax-amount.component
 import { SurchargeComponent } from './components/inputdetail/surcharge/surcharge.component';
 import { PenaltyComponent } from './components/inputdetail/penalty/penalty.component';
 import { TotalAmountComponent } from './components/inputdetail/total-amount/total-amount.component';
-import { User } from './components/inputdetail/filling-type/filling-type-model';
+
 
 
 
@@ -62,3 +62,5 @@ import { User } from './components/inputdetail/filling-type/filling-type-model';
 export class AppModule {
 
  }
+
+

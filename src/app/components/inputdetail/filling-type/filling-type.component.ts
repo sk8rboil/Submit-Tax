@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from './filling-type-model';
+import { User } from '../inputModel';
 
 interface Food {
   value: string;
@@ -26,8 +26,24 @@ export class FillingTypeComponent {
     {value: 'tacos-2', viewValue: 'Tacos'},
   ];
 
-  userModel = new User('0','');
+  userModel = new User('0','Jan','2022','','','','','');
 
+  months = ['January','Feb','Mar','April','May','June','July','August','Sep','Oct','November','December'];
+
+  years = ['2020','2021','2022'];
+
+  topics = ['Angular','React','Vue'];
+
+  calculate(){
+/*     let x =  this.userModel.saleamount;
+    let y : number = + x;
+    console.log(y); */
+    console.log("blur");
+    let getdata = this.userModel.saleamount * 0.07;
+    console.log(getdata);
+    return getdata;
+    
+  }
 
 
 }
