@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { User } from '../inputModel';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { User } from '../taxData';
 
 interface Food {
   value: string;
@@ -14,6 +14,7 @@ interface Food {
 
 export class FillingTypeComponent {
   
+/*   @Output() testevent = new EventEmitter(); */
 
 /*   changeState(value: string){
     console.log(" Value is : ", value );
@@ -34,16 +35,33 @@ export class FillingTypeComponent {
 
   topics = ['Angular','React','Vue'];
 
-  calculate(){
-/*     let x =  this.userModel.saleamount;
+  currentValue = 0;
+  surchargeValue = 0;
+  penalty = 200.00;
+  totaofvat = 0;
+
+  calculate(getdata: any){
+/*  let x =  this.userModel.saleamount;
     let y : number = + x;
     console.log(y); */
     console.log("blur");
-    let getdata = this.userModel.saleamount * 0.07;
+    getdata = this.userModel.saleamount * 0.07;
     console.log(getdata);
-    return getdata;
-    
+    this.currentValue = getdata;
+    this.surchargeValue = this.currentValue * 0.1;
+    this.totaofvat = getdata + this.surchargeValue + this.penalty;
+
   }
+
+  onSubmit(){
+    console.log(this.userModel);
+  }
+
+/*   testNumberChange(){
+    console.log("gasd");
+  } */
+
+
 
 
 }

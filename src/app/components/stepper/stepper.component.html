@@ -5,61 +5,205 @@
   <div class="container">
     <mat-stepper headerPosition="top" #stepper>
       <mat-step [stepControl]="firstFormGroup">
-          <ng-template matStepLabel>Fill out your name</ng-template>
-          <div class="container">
-            <app-input-detail></app-input-detail>
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <div class="container">
+          <div class="card" style="padding: 30px;">
+            <h3><strong>1.Tax Filing Detail</strong></h3>
+            <hr class="hr hr-blurry" />
+            <h5>Type of filing</h5>
+            <form #userForm="ngForm">
+              <!--   {{userForm.value | json }} -->
+              {{userModel | json}}
+
+              <div class="form-group" (ngSubmit)="onSubmit()">
+                <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue">
+                  <mat-radio-button value="0" #myvalue0>Ordinary filling</mat-radio-button>
+                  <mat-radio-button value="1" #myvalue1>Additional filling</mat-radio-button>
+                </mat-radio-group>
+
+                <div class="row">
+                  <div class="col">
+                    <h5>Tax month //Ordinary</h5>
+
+                    <!-- Month -->
+                    <mat-form-field appearance="fill" style="margin-right: 5px;">
+                      <mat-label>Month</mat-label>
+                      <mat-select name="month" [(ngModel)]="userModel.monthvalue">
+                        <mat-option *ngFor="let item of months" [value]="item">
+                          {{item}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <!-- Year -->
+                    <mat-form-field appearance="fill" name="framework">
+                      <mat-label>Year</mat-label>
+                      <mat-select name="year" [(ngModel)]="userModel.yearvalue">
+                        <mat-option *ngFor="let item of years" [value]="item">{{item}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col" *ngIf="userModel.radiovalue == '1' ">
+                    <h5>Type</h5>
+                    <mat-form-field appearance="fill" name="framework">
+                      <mat-label>Cars</mat-label>
+                      <mat-select>
+                        <mat-option></mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+                <div>
+                  <div class="row align-items-center">
+                    <div class="col-md-8 col-sm-12">
+                      <span>1.Total value of taxable electronic service exclusive of VAT</span>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                      <input type="number" (blur)="calculate($event)" class="form-control my-2" name="saleamount"
+                        [(ngModel)]="userModel.saleamount" placeholder="THB" style="text-align: right;">
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="col-md-8 col-sm-12">
+                      <span>2.Total VAT to be remitted (7% of 1.)</span>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                      <input type="number" value="{{currentValue}}" class="form-control my-2" name="taxamount"
+                        [(ngModel)]="userModel.taxamount" placeholder="THB" style="text-align: right;">
+                    </div>
+                  </div>
+                </div>
+
+                <!--     <div *ngIf="userModel.radiovalue == '0' ">
+                    <app-sale-amount></app-sale-amount>
+                    <app-tax-amount></app-tax-amount>
+                  </div> -->
+
+                <div *ngIf="userModel.radiovalue == '1' ">
+
+                  <h3><strong>2.Tax Computation</strong></h3>
+                  <hr class="hr hr-blurry" />
+                  <h5><strong>In case of late filing and payment, or addtional filing</strong> </h5>
+
+
+                  <!-- Component -->
+                  <div>
+                    <div class="row align-items-center">
+                      <div class="col-md-8 col-sm-12">
+                        <span>3. Surcharge</span>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <input disabled value="{{surchargeValue}}" type="text" class="form-control my-2"
+                          placeholder="THB" aria-label="Username" style="text-align: right;"
+                          aria-describedby="basic-addon1">
+                      </div>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-md-8 col-sm-12">
+                        <span>4.Total VAT to be remitted (7% of 1.)</span>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <input disabled value="{{penalty}}" type="text" class="form-control my-2 " placeholder="THB"
+                          aria-label="Username" style="text-align: right;" aria-describedby="basic-addon1">
+                      </div>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-md-8 col-sm-12">
+                        <span>5.Total</span>
+                      </div>
+                      <div class="col-md-4 col-sm-12">
+                        <input disabled value="{{totaofvat}}" type="text" class="form-control my-2 " placeholder="THB"
+                          aria-label="Username" style="text-align: right;" aria-describedby="basic-addon1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
+        </div>
+        <div class="container d-flex justify-content-start">
+          <button class="btn btn-warning mt-5" type="submit" style="border-radius: 20px;">Back</button>
+          <button class="btn btn-primary mt-5" style="border-radius: 20px;">Next</button>
+        </div>
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup" optional>
         <form [formGroup]="secondFormGroup">
+          {{userModel | json}}
           <ng-template matStepLabel>Review & Confirm</ng-template>
           <div class="container">
-              <div class="card" style="padding: 30px;">
-                <h3><strong>Tax Filing Detail</strong></h3>
-                <hr class="hr hr-blurry" />
-                 <h5><strong>Type of filing</strong></h5>
-                   <h5>Data</h5>
-                 <h5><strong>Type of filing</strong></h5>
-                   <h5>Data</h5>
-                <h3><strong>Tax Computation</strong></h3>
-                <hr class="hr hr-blurry" />
-                <div class="row">
-                  <div class="col-md-8">
-                    <h5><strong>Total value of taxable electronic service exclusive of VAT</strong></h5>
-                  </div>
-                  <div class="col-md-4">
-                    <h5>000000</h5>
-                  </div>
+            <div class="card" style="padding: 30px;">
+              <h3><strong>Tax Filing Detail</strong></h3>
+              <hr class="hr hr-blurry" />
+              <h5><strong>Type of filing</strong></h5>
+              <h5>{{userModel.radiovalue}}</h5>
+              <h5><strong>VAT Month</strong></h5>
+              <h5>{{userModel.monthvalue}}</h5>
+              <h3><strong>Tax Computation</strong></h3>
+              <hr class="hr hr-blurry" />
+              <div class="row">
+                <div class="col-md-8">
+                  <h5><strong>Total value of taxable electronic service exclusive of VAT</strong></h5>
                 </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <h5><strong>Total VAT to be remitted</strong></h5>
-                    <h5>(7% of Total value of taxable electronic service exclusive of VAT)</h5>
-                  </div>
-                  <div class="col-md-4">
-                    <h5>000000</h5>
-                  </div>
+                <div class="col-md-4">
+                  <h5>{{userModel.saleamount}} THB</h5>
                 </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <h5><strong>Total Amount Payable </strong></h5>
-                  </div>
-                  <div class="col-md-4">
-                    <h4><strong>000000</strong></h4>
-                  </div>
-                </div>
-                <h3><strong>Declaration</strong></h3>
-                <hr class="hr hr-blurry" />
-                <h5>I hereby certify that information given above are true and correct and agree to be bound by such information</h5>
-                
               </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <h5><strong>Total VAT to be remitted</strong></h5>
+                  <h5>(7% of Total value of taxable electronic service exclusive of VAT)</h5>
+                </div>
+                <div class="col-md-4">
+                  <h5>{{currentValue}} THB</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <h5><strong>Total Amount Payable </strong></h5>
+                </div>
+                <div class="col-md-4">
+                  <h4><strong>{{totaofvat}} THB</strong></h4>
+                </div>
+              </div>
+              <h3><strong>Declaration</strong></h3>
+              <hr class="hr hr-blurry" />
+              <h5>I hereby certify that information given above are true and correct and agree to be bound by such
+                information</h5>
+
+            </div>
           </div>
 
           <div class="container d-flex justify-content-center">
-            <button class="btn btn-success mt-5" style="border-radius: 20px;">Confirm and Submit</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    {{userModel | json}}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          
+
 
         </form>
       </mat-step>

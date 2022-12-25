@@ -1,9 +1,8 @@
 <form #userForm="ngForm">
-
   <!--   {{userForm.value | json }} -->
   {{userModel | json}}
 
-  <div class="form-group">
+  <div class="form-group" (ngSubmit)="onSubmit()">
     <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue">
       <mat-radio-button value="0" #myvalue0>Ordinary filling</mat-radio-button>
       <mat-radio-button value="1" #myvalue1>Additional filling</mat-radio-button>
@@ -49,7 +48,7 @@
           <span>1.Total value of taxable electronic service exclusive of VAT</span>
         </div>
         <div class="col-md-4 col-sm-12">
-          <input type="number" (blur)="calculate()" class="form-control my-2" name="saleamount"
+          <input type="number" (blur)="calculate($event)" class="form-control my-2" name="saleamount"
             [(ngModel)]="userModel.saleamount" placeholder="THB" style="text-align: right;">
         </div>
       </div>
@@ -58,7 +57,7 @@
           <span>2.Total VAT to be remitted (7% of 1.)</span>
         </div>
         <div class="col-md-4 col-sm-12">
-          <input [value]="userModel.saleamount" type="number" class="form-control my-2" name="taxamount"
+          <input type="number" value="{{currentValue}}" class="form-control my-2" name="taxamount"
             [(ngModel)]="userModel.taxamount" placeholder="THB" style="text-align: right;">
         </div>
       </div>
@@ -77,12 +76,36 @@
 
       <!-- Component -->
       <div>
-        <app-surcharge></app-surcharge>
-        <app-penalty></app-penalty>
-        <app-total-amount></app-total-amount>
+        <div class="row align-items-center">
+          <div class="col-md-8 col-sm-12">
+            <span>3. Surcharge</span>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <input disabled value="{{surchargeValue}}" type="text" class="form-control my-2" placeholder="THB" aria-label="Username"
+              style="text-align: right;" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-md-8 col-sm-12">
+            <span>4.Total VAT to be remitted (7% of 1.)</span>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <input disabled value="{{penalty}}" type="text" class="form-control my-2 " placeholder="THB" aria-label="Username"
+              style="text-align: right;" aria-describedby="basic-addon1">
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-md-8 col-sm-12">
+            <span>5.Total</span>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <input disabled value="{{totaofvat}}" type="text" class="form-control my-2 " placeholder="THB" aria-label="Username"
+              style="text-align: right;" aria-describedby="basic-addon1">
+          </div>
+        </div>
       </div>
 
     </div>
   </div>
-
+  <button type="submit" class="btn btn-warning mt-5"  style="border-radius: 20px;">Next</button>
 </form>
