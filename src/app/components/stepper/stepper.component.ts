@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {MatStepperIntl} from '@angular/material/stepper';
 import { User } from '../inputdetail/taxData';
 
@@ -15,31 +15,30 @@ export class StepperIntl extends MatStepperIntl {
   providers: [{provide: MatStepperIntl, useClass: MatStepperIntl}],
 })
 export class StepperComponent{
-  optionalLabelText!: string;
-  optionalLabelTextChoices: string[] = ['Option 1', 'Option 2', 'Option 3'];
+
+  YearFormControl = new FormControl('', Validators.required);
+  MonthFormControl = new FormControl('', Validators.required);
+  TypeFormControl = new FormControl('', Validators.required);
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
+  isLinear = false;
 
-  constructor(private _formBuilder: FormBuilder, private _matStepperIntl: MatStepperIntl) {}
+  constructor(private _formBuilder: FormBuilder) {}
+  
 
-  updateOptionalLabel() {
-    this._matStepperIntl.optionalLabel = this.optionalLabelText;
-    // Required for the optional label text to be updated
-    // Notifies the MatStepperIntl service that a change has been made
-    this._matStepperIntl.changes.next();
-  }
 
-  userModel = new User('0','Jan','2022','','','','','');
+  userModel = new User('','','','','','','','');
 
   months = ['January','Feb','Mar','April','May','June','July','August','Sep','Oct','November','December'];
 
   years = ['2020','2021','2022'];
 
-  topics = ['Angular','React','Vue'];
+  type = ['one-time','data','data'];
 
   currentValue = 0;
   surchargeValue = 0;

@@ -3,9 +3,13 @@
     <h1 class="my-2"><strong>Submit Tax Filing</strong></h1>
   </div>
   <div class="container">
-    <mat-stepper headerPosition="top" #stepper>
+    <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+      {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+    </button>
+    <mat-stepper headerPosition="top" [linear]="isLinear" #stepper>
       <mat-step [stepControl]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Input Detail</ng-template>
         <div class="container">
           <div class="card" style="padding: 30px;">
             <h3><strong>1.Tax Filing Detail</strong></h3>
@@ -13,32 +17,33 @@
             <h5>Type of filing</h5>
             <form #userForm="ngForm">
               <!--   {{userForm.value | json }} -->
-              {{userModel | json}}
+              <!-- {{userModel | json}} -->
 
               <div class="form-group" (ngSubmit)="onSubmit()">
-                <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue">
+                <mat-radio-group aria-label="Select an option" name="value" [(ngModel)]="userModel.radiovalue" required>
                   <mat-radio-button value="0" #myvalue0>Ordinary filling</mat-radio-button>
                   <mat-radio-button value="1" #myvalue1>Additional filling</mat-radio-button>
                 </mat-radio-group>
 
                 <div class="row">
                   <div class="col">
-                    <h5>Tax month //Ordinary</h5>
+                    <h5>Tax month</h5>
 
                     <!-- Month -->
-                    <mat-form-field appearance="fill" style="margin-right: 5px;">
+                    <mat-form-field appearance="fill" style="margin-right: 5px;" >
                       <mat-label>Month</mat-label>
-                      <mat-select name="month" [(ngModel)]="userModel.monthvalue">
+                      <mat-select name="month" [(ngModel)]="userModel.monthvalue" matNativeControl required [formControl]="MonthFormControl">
                         <mat-option *ngFor="let item of months" [value]="item">
                           {{item}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                   
 
                     <!-- Year -->
                     <mat-form-field appearance="fill" name="framework">
                       <mat-label>Year</mat-label>
-                      <mat-select name="year" [(ngModel)]="userModel.yearvalue">
+                      <mat-select name="year" [(ngModel)]="userModel.yearvalue" matNativeControl required [formControl]="YearFormControl">
                         <mat-option *ngFor="let item of years" [value]="item">{{item}}</mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -47,9 +52,8 @@
                   <div class="col" *ngIf="userModel.radiovalue == '1' ">
                     <h5>Type</h5>
                     <mat-form-field appearance="fill" name="framework">
-                      <mat-label>Cars</mat-label>
-                      <mat-select>
-                        <mat-option></mat-option>
+                      <mat-select name="type" matNativeControl required [formControl]="TypeFormControl">
+                        <mat-option *ngFor="let item of type" [value]="item">{{item}}</mat-option>
                       </mat-select>
                     </mat-form-field>
 
@@ -102,7 +106,7 @@
                     </div>
                     <div class="row align-items-center">
                       <div class="col-md-8 col-sm-12">
-                        <span>4.Total VAT to be remitted (7% of 1.)</span>
+                        <span>4.Pernalty</span>
                       </div>
                       <div class="col-md-4 col-sm-12">
                         <input disabled value="{{penalty}}" type="text" class="form-control my-2 " placeholder="THB"
@@ -111,7 +115,7 @@
                     </div>
                     <div class="row align-items-center">
                       <div class="col-md-8 col-sm-12">
-                        <span>5.Total</span>
+                        <span>5.Total amount VAT,surcharge,and penalty to be remitted(2.+3.+4.)</span>
                       </div>
                       <div class="col-md-4 col-sm-12">
                         <input disabled value="{{totaofvat}}" type="text" class="form-control my-2 " placeholder="THB"
@@ -125,48 +129,64 @@
           </div>
         </div>
         <div class="container d-flex justify-content-start">
-          <button class="btn btn-warning mt-5" type="submit" style="border-radius: 20px;">Back</button>
-          <button class="btn btn-primary mt-5" style="border-radius: 20px;">Next</button>
+          <button class="btn my-btn btn-light mt-3" (click)="stepper.reset()">Back</button>
+          <button class="btn my-btn btn-primary mt-3 mx-2" matStepperNext>Next</button>
+          
         </div>
+      </form>
       </mat-step>
 
-      <mat-step [stepControl]="secondFormGroup" optional>
+      <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-          {{userModel | json}}
+<!--           {{userModel | json}} -->
           <ng-template matStepLabel>Review & Confirm</ng-template>
           <div class="container">
             <div class="card" style="padding: 30px;">
               <h3><strong>Tax Filing Detail</strong></h3>
               <hr class="hr hr-blurry" />
-              <h5><strong>Type of filing</strong></h5>
-              <h5>{{userModel.radiovalue}}</h5>
-              <h5><strong>VAT Month</strong></h5>
-              <h5>{{userModel.monthvalue}}</h5>
+              <div class="row">
+                <div class="col-md-2">
+                 <h5><strong>Type of filing</strong></h5>
+                </div>
+                <div class="col-md-10">
+                 <h5>{{userModel.radiovalue}}</h5>
+                </div>            
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
+                  <h5><strong>VAT Month</strong></h5>
+                </div>
+                <div class="col-md-10">
+                  <h5>{{userModel.monthvalue}}</h5>
+                </div>
+              </div>
+      
               <h3><strong>Tax Computation</strong></h3>
               <hr class="hr hr-blurry" />
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8" >
                   <h5><strong>Total value of taxable electronic service exclusive of VAT</strong></h5>
                 </div>
-                <div class="col-md-4">
-                  <h5>{{userModel.saleamount}} THB</h5>
+                <div class="col-md-4" >
+                  <h5 class="d-flex justify-content-end">{{userModel.saleamount}} THB</h5>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8" >
                   <h5><strong>Total VAT to be remitted</strong></h5>
                   <h5>(7% of Total value of taxable electronic service exclusive of VAT)</h5>
                 </div>
-                <div class="col-md-4">
-                  <h5>{{currentValue}} THB</h5>
+                <div class="col-md-4" >
+                  <h5 class="d-flex justify-content-end">{{currentValue}} THB</h5>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8" >
                   <h5><strong>Total Amount Payable </strong></h5>
                 </div>
-                <div class="col-md-4">
-                  <h4><strong>{{totaofvat}} THB</strong></h4>
+                <div class="col-md-4" >
+                  <h4 class="d-flex justify-content-end"><strong>{{totaofvat}} THB</strong></h4>
                 </div>
               </div>
               <h3><strong>Declaration</strong></h3>
@@ -177,10 +197,10 @@
             </div>
           </div>
 
-          <div class="container d-flex justify-content-center">
+          <div class="container d-flex justify-content-center my-3">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Launch demo modal
+              Confirm and Submit
             </button>
 
             <!-- Modal -->

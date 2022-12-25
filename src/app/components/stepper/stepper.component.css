@@ -15,3 +15,8 @@
 .demo-radio-button {
   margin: 5px;
 }
+
+.my-btn{
+  border-radius: 20px;
+  width: 6rem;
+}
